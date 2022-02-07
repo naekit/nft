@@ -1,7 +1,7 @@
 {
     "name": "WIZ",
     "description": "Wot a magical wizard!",
-    "image": "/ipfs/bafybeiclgrx3oplat36ehzo2mdkefcqij3xbw6au5mv43utg7exrorbmqq/?filename=wotwizard.png",
+    "image": "https://ipfs.io/ipfs/QmTQDfLp9ttNhoZBJWv9Zn89GqK4cN1CNqu7fjChnfRejD?filename=wotwizard.png",
     "attributes": [
         {
             "trait_type": "wotness",

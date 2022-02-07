@@ -1,6 +1,7 @@
-from scripts.helpful_scripts import get_account, SimpleCollectible
+from scripts.helpful_scripts import get_account
+from brownie import SimpleCollectible
 
-sample_token_uri = "https://ipfs.io/ipfs/Qme72SJca9yPyVcCH8smUovatM2Mwbgq5Tr8YGPoKicbuK?filename=0wotwizard.json"
+sample_token_uri = "https://ipfs.io/ipfs/QmP2YVEkkpiNQFNec368vvBk7oeY81tVsn3xkXnb3fyRvy?filename=0wotwizard.json"
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
 
 
