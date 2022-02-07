@@ -1,0 +1,11 @@
+{
+    "name": "WIZ",
+    "description": "Wot a magical wizard!",
+    "image": "/ipfs/bafybeiclgrx3oplat36ehzo2mdkefcqij3xbw6au5mv43utg7exrorbmqq/?filename=wotwizard.png",
+    "attributes": [
+        {
+            "trait_type": "wotness",
+            "value": 100
+        }
+    ]
+}
