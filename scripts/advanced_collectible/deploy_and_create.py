@@ -3,6 +3,7 @@ from scripts.helpful_scripts import (
     get_account,
     OPENSEA_URL,
     get_contract,
+    get_publish_source,
 )
 from brownie import AdvancedCollectible, network, config
 
@@ -15,11 +16,13 @@ def deploy_and_create():
         config["networks"][network.show_active()]["keyhash"],
         config["networks"][network.show_active()]["fee"],
         {"from": account},
+        publish_source=get_publish_source(),
     )
     fund_with_link(advanced_collectible.address)
     creating_tx = advanced_collectible.createCollectible("None", {"from": account})
     creating_tx.wait(1)
     print("New token has been created!")
+    return advanced_collectible, creating_tx
 
 
 def main():

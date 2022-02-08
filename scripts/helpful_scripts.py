@@ -1,5 +1,5 @@
-from os import link
 from brownie import accounts, network, config, Contract, LinkToken, VRFCoordinatorMock
+import os
 
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
@@ -71,6 +71,15 @@ def deploy_mocks():
     vrf_coordinator = VRFCoordinatorMock.deploy(link_token.address, {"from": account})
     print(f"VRFCoordinator deployed to {vrf_coordinator.address}")
     print("All Done")
+
+
+def get_publish_source():
+    if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS or not os.getenv(
+        "ETHERSCAN_TOKEN"
+    ):
+        return False
+    else:
+        return True
 
 
 def fund_with_link(
