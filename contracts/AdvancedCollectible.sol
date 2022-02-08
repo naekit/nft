@@ -21,6 +21,8 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
     }
     mapping(uint256 => School) public tokenIdToSchool;
     mapping(bytes32 => address) public requestIdToSender;
+    event requestedCollectible(bytes32 indexed requestId, address requester);
+    event schoolAssigned(uint256 indexed tokenId, School school);
 
     constructor(
         address _vrfCoordinator,
@@ -42,7 +44,8 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         returns (bytes32)
     {
         bytes32 requestId = requestRandomness(keyhash, fee);
-        requestIdToSender[requestId] = msg.sender
+        requestIdToSender[requestId] = msg.sender;
+        emit requestedCollectible(requestId, msg.sender);
     }
 
     function fulfillRandomness(bytes32 requestId, uint256 randomNumber)
@@ -52,9 +55,19 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         School school = School(randomNumber % 4);
         uint256 newTokenId = tokenCounter;
         tokenIdToSchool[newTokenId] = school;
+        emit schoolAssigned(newTokenId, school);
         address owner = requestIdToSender[requestId];
         _safeMint(owner, newTokenId);
         // _setTokenURI(newTokenId, tokenURI);
         tokenCounter = tokenCounter + 1;
+    }
+
+    function setTokenURI(uint256 tokenId, string memory _tokenURI) public {
+        // wot fot sot dot uri for each
+        require(
+            _isApprovedOrOwner(_msgSender(), tokenId),
+            "ERC721: caller is not owner nor approved"
+        );
+        _setTokenURI(tokenId, _tokenURI);
     }
 }
