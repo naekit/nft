@@ -6,6 +6,13 @@ import requests
 import json
 import os
 
+school_to_image_uri = {
+    "SOT": "https://ipfs.io/ipfs/QmTQDfLp9ttNhoZBJWv9Zn89GqK4cN1CNqu7fjChnfRejD?filename=sotwizard.png",
+    "DOT": "https://ipfs.io/ipfs/QmPKaseNucwkGbaGMMKgyFMuccHcbZ6N1a4wSwFRUw9aqa?filename=dotwizard.png",
+    "FOT": "https://ipfs.io/ipfs/QmekJZrbfetRF7PQXWBV2gHEq45B884iHtZQVMrnKifX6P?filename=fotwizard.png",
+    "WOT": "https://ipfs.io/ipfs/QmZisQxRhL4xQWAMuaHHFxpktXUJMnPQPodp2vS3QkfZXm?filename=wotwizard.png",
+}
+
 
 def main():
     advanced_collectible = AdvancedCollectible[-1]
@@ -24,11 +31,15 @@ def main():
             collectible_metadata["name"] = school
             collectible_metadata["description"] = f"A powerful {school}wiz!"
             image_path = "./img/" + school.lower().replace("_", "-") + "wizard.png"
-            image_uri = upload_to_ipfs(image_path)
+            image_uri = None
+            if os.getenv("UPLOAD_IPFS") == "true":
+                image_uri = upload_to_ipfs(image_path)
+            image_uri = image_uri if image_uri else school_to_image_uri[school]
             collectible_metadata["image"] = image_uri
             with open(metadata_file_name, "w") as file:
                 json.dump(collectible_metadata, file)
-            upload_to_ipfs(metadata_file_name)
+            if os.getenv("UPLOAD_IPFS") == "true":
+                upload_to_ipfs(metadata_file_name)
 
 
 def upload_to_ipfs(filepath):

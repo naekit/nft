@@ -112,13 +112,3 @@ def fund_with_link(
     tx.wait(1)
     print("Funded Contract!")
     return tx
-
-
-def get_image_path():
-    advanced_collectible = AdvancedCollectible[-1]
-    number_of_advanced_collectibles = advanced_collectible.tokenCounter()
-    for token_id in range(number_of_advanced_collectibles):
-        school = get_school(advanced_collectible.tokenIdToSchool(token_id))
-        image_path = "./img/" + school.lower().replace("_", "-") + "wizard.png"
-        print(image_path)
-        return image_path
