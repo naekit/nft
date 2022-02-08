@@ -1,9 +1,22 @@
-from brownie import accounts, network, config, Contract, LinkToken, VRFCoordinatorMock
+from brownie import (
+    accounts,
+    network,
+    config,
+    Contract,
+    LinkToken,
+    VRFCoordinatorMock,
+    AdvancedCollectible,
+)
 import os
 
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
+SCHOOL_MAPPING = {0: "WOT", 1: "FOT", 2: "DOT", 3: "SOT"}
+
+
+def get_school(school_number):
+    return SCHOOL_MAPPING[school_number]
 
 
 def get_account(index=None, id=None):
@@ -99,3 +112,13 @@ def fund_with_link(
     tx.wait(1)
     print("Funded Contract!")
     return tx
+
+
+def get_image_path():
+    advanced_collectible = AdvancedCollectible[-1]
+    number_of_advanced_collectibles = advanced_collectible.tokenCounter()
+    for token_id in range(number_of_advanced_collectibles):
+        school = get_school(advanced_collectible.tokenIdToSchool(token_id))
+        image_path = "./img/" + school.lower().replace("_", "-") + "wizard.png"
+        print(image_path)
+        return image_path
