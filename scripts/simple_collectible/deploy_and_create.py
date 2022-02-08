@@ -1,8 +1,7 @@
-from scripts.helpful_scripts import get_account
+from scripts.helpful_scripts import get_account, OPENSEA_URL
 from brownie import SimpleCollectible
 
 sample_token_uri = "https://ipfs.io/ipfs/QmP2YVEkkpiNQFNec368vvBk7oeY81tVsn3xkXnb3fyRvy?filename=0wotwizard.json"
-OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
 
 
 def deploy_and_create():
